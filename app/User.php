@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -26,4 +27,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function getAllUsers(){
+        $users = DB::table('users')->get();
+        foreach ($users as $key => $user){
+            $user->password = decrypt($user->password);
+            $users[$key] = $user;
+        }
+        return $users;
+    }
 }

@@ -11,6 +11,15 @@
 |
 */
 
-Route::get('/', function () {
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Auth;
+
+Router::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Router::get('/home', 'HomeController@index')->name('home');
+
+Router::resource('/task','TaskController');

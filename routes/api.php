@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Illuminate\Routing\Router;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Router::get('/user', function (Request $request) {
     return $request->user();
+})->middleware('auth:api');
+
+Router::get('test',function(){
+   return response([1,2,3,4],200); 
+});
+
+Router::get('users',function(Request $request){
+   $user = new User();
+   $users = $user->getAllUsers();
+   return response($users,200);
 });
